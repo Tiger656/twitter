@@ -9,18 +9,21 @@ import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JWT_CONSTANTS } from './auth/constants';
 import { ValidatorModule } from './validator/validator.module';
+import { conf } from './conf';
 
 @Module({
   imports: [
     PostModule,
-    MongooseModule.forRoot('mongodb://root:password@localhost:27017'),
+    // MongooseModule.forRoot('mongodb://root:password@localhost:27017'),
+    MongooseModule.forRoot(conf.db.uri),
     MulterModule.register({
       dest: './files',
     }),
     UserModule,
     AuthModule,
     JwtModule.register({
-      secret: JWT_CONSTANTS.secret,
+      // secret: JWT_CONSTANTS.secret,
+      secret: conf.auth.secret,
     }),
     ValidatorModule,
   ],

@@ -1,3 +1,4 @@
+'use client'
 import { Inter } from "next/font/google";
 import "primeflex/primeflex.css";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';   // theme

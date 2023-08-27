@@ -10,6 +10,10 @@
       "dependsOn": ["^start"],
       "outputs": [] 
     },
+    "start:dev": {
+      "dependsOn": ["^start:dev"],
+      "outputs": [] 
+    },
     "test": {
       "dependsOn": ["^test"],
       "outputs": []

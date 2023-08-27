@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from "primereact/button";
 import { SplitButton } from "primereact/splitbutton";
 import { Toolbar } from "primereact/toolbar";

@@ -12,12 +12,20 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "start:doppler": "yarn doppler nest start",
+    "dev:doppler": "APP_ENV=local yarn doppler nest start --watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:doppler": "APP_ENV=test yarn doppler jest -c jest.config.ts",
+    "doppler": "doppler -p app_twitter_monorepo -c ${APP_ENV} run -- ",
+    "env:local:up": "APP_ENV=local yarn doppler docker compose up -d",
+    "env:local:down": "APP_ENV=local yarn doppler docker compose down ",
+    "env:test:up": "APP_ENV=test yarn doppler docker compose up -d",
+    "env:test:down": "APP_ENV=test yarn doppler docker compose down"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -35,9 +43,7 @@
     "zod": "^3.21.4",
     "config": "*"
   },
-  "devDependencies": {
-    
-  },
+  "devDependencies": {},
   "jest": {
     "moduleFileExtensions": [
       "js",

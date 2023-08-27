@@ -5,14 +5,18 @@
     "dev": "turbo run dev",
     "test": "turbo run test",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "doppler": "doppler -p app_twitter_monorepo -c ${APP_ENV} run -- ",
+    "env:local:up": "APP_ENV=local yarn doppler docker compose up -d",
+    "env:local:down": "APP_ENV=local yarn doppler docker compose down ",
+    "env:test:up": "APP_ENV=test yarn doppler docker compose up -d",
+    "env:test:down": "APP_ENV=test yarn doppler docker compose down"
   },
   "devDependencies": {
     "@turbo/gen": "^1.9.7",
     "eslint-config-custom": "*",
     "prettier": "^2.5.1",
     "turbo": "latest",
-
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
@@ -32,7 +36,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "4.2.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.1.6"
   },
   "name": "my-turborepo",
   "packageManager": "yarn@1.22.19",

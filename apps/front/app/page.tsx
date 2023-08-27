@@ -1,20 +1,46 @@
 'use client'
-import Image from 'next/image'
-import styles from './page.module.css'
+import useSWR from 'swr'
 import { useRouter } from 'next/navigation';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
-import { Key } from 'readline';
+import { useEffect, useState } from 'react';
+import { TupleType } from 'typescript';
+
+
+const fetcher = async (url: string, param?: any) => {
+  const response = await fetch(url, param);
+  return await response.json() as [];
+}
 
 export default async function Home() {
+ 
   const router = useRouter()
-  const token = localStorage.getItem("token");
-  if(!token){
-    router.push("/login");  
-  } 
+  const { data, error, isLoading } = useSWR("http://localhost:3000/post", fetcher)
+  
+  // const token = localStorage.getItem("token");
+  // if(!token){
+  //   router.push("/login");  
+  // } 
 
-  const response = await fetch("http://localhost:3000/post");
-  const posts = await response.json() as [];
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+
+  //   if(!token){
+  //     router.push("/login");  
+  //   } 
+  // }, [])
+
+
+  
+
+  // const response = await fetch("http://localhost:3000/post");
+  // const posts = await response.json() as [];
+  
+ 
+
+  
+
+  
 
   const header = (
     <img alt="Card" src="https://primefaces.org/cdn/primereact/images/usercard.png" />
@@ -26,18 +52,21 @@ export default async function Home() {
     </div>
   );
 
-  const card = (data: any) => (
+  const card = (cardData: any) => (
     <Card title="Title" subTitle="Subtitle" footer={footer} header={header} className="md:w-25rem">
                 <p className="m-0">
                   
-                    {data.textContent}
+                    {cardData.textContent}
                 </p>
     </Card>
   )
 
+  if (error) return <p>Failed to load.</p>
+  if (isLoading) return <p>Loading...</p>
+
   return (
     <div className="card flex justify-content-center">
-            {posts.map(element => card(element))}
+      {data.map(element => card(element))}
     </div>
   )
 }
