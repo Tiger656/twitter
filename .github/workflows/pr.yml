@@ -45,6 +45,6 @@ jobs:
       #   run: yarn env:test:down
 
       - name: Set up  env
-        run: yarn env:test:up
+        run: yarn env:local:up
       - name: Tear down tes env
-        run: yarn env:test:down
+        run: yarn env:local:down
