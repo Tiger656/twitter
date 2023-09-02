@@ -24,7 +24,7 @@ docker push $DOCKER_NAME:$TAG
 #fly.io
 
 #fly auth login
-#fly launch --image ghcr.io/tiger656/liga-twitter-server:0.0.1
+#fly launch --image ghcr.io/tiger656/liga-twitter/server:latest --vm-memory 512
 #fly status    statu of your apps
 #fly apps restart liga-twitter-server       restart your "liga-twitter-server" app
 #fly platform vm-sizes      shows all available vm plans of fly.io. Its better to recheck on site
@@ -33,4 +33,4 @@ docker push $DOCKER_NAME:$TAG
 #flyctl machine destroy <id> [flags]    https://fly.io/docs/flyctl/machine-destroy/
 #flyctl auth token  create token
 #
-#
+#https://fly.io/docs/about/pricing/

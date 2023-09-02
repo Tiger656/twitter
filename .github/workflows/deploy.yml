@@ -5,7 +5,7 @@ on:
     inputs:
       version:
         required: true
-        description: 'version to deploy in the format of v1.1.1'
+        description: 'version to deploy in the format of v1.1.1 (or latest :) )'
         default: 'latest'
 jobs:
   deployment:
