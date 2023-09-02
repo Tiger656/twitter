@@ -28,6 +28,6 @@ async function bootstrap() {
   Logger.log(
     `Server running on ${port}`,
     `Bootstrap`
-  )
+  ) 
 }
 bootstrap();
