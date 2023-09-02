@@ -1,0 +1,113 @@
+# flyctl launch added from .gitignore
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+**/node_modules
+**/.pnp
+**/.pnp.js
+
+# testing
+**/coverage
+
+# next.js
+**/.next
+**/out
+**/build
+
+# misc
+**/.DS_Store
+**/*.pem
+
+# debug
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+
+# local env files
+**/.env
+**/.env.local
+**/.env.development.local
+**/.env.test.local
+**/.env.production.local
+
+# turbo
+**/.turbo
+
+# vercel
+**/.vercel
+
+# flyctl launch added from apps/front/.gitignore
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+apps/front/node_modules
+apps/front/.pnp
+apps/front/**/.pnp.js
+
+# testing
+apps/front/coverage
+
+# next.js
+apps/front/.next
+apps/front/out
+
+# production
+apps/front/build
+
+# misc
+apps/front/**/.DS_Store
+apps/front/**/*.pem
+
+# debug
+apps/front/**/npm-debug.log*
+apps/front/**/yarn-debug.log*
+apps/front/**/yarn-error.log*
+
+# local env files
+apps/front/**/.env*.local
+
+# vercel
+apps/front/**/.vercel
+
+# typescript
+apps/front/**/*.tsbuildinfo
+apps/front/**/next-env.d.ts
+
+# flyctl launch added from apps/server/.gitignore
+# compiled output
+apps/server/**/.db
+apps/server/dist
+apps/server/node_modules
+
+# Logs
+apps/server/**/logs
+apps/server/**/*.log
+apps/server/**/npm-debug.log*
+apps/server/**/pnpm-debug.log*
+apps/server/**/yarn-debug.log*
+apps/server/**/yarn-error.log*
+apps/server/**/lerna-debug.log*
+
+# OS
+apps/server/**/.DS_Store
+
+# Tests
+apps/server/coverage
+apps/server/.nyc_output
+
+# IDEs and editors
+apps/server/.idea
+apps/server/**/.project
+apps/server/**/.classpath
+apps/server/**/.c9
+apps/server/**/*.launch
+apps/server/**/.settings
+apps/server/**/*.sublime-workspace
+
+# IDE - VSCode
+apps/server/**/.vscode/*
+!apps/server/**/.vscode/settings.json
+!apps/server/**/.vscode/tasks.json
+!apps/server/**/.vscode/launch.json
+!apps/server/**/.vscode/extensions.json
+fly.toml

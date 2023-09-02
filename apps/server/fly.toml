@@ -1,0 +1,18 @@
+# fly.toml app configuration file generated for liga-twitter-server-2 on 2023-09-02T17:30:36+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "liga-twitter-server-2"
+primary_region = "ams"
+
+[build]
+  image = "ghcr.io/tiger656/liga-twitter-server:0.0.1"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]

@@ -1,20 +1,40 @@
 name: Before closing pull request
 on:
   pull_request:
+  push:
+      branches:
+        - main
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+      
       - name: Install global deps
         run: npm i -g yarn
+
+      - name: cache
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key:  node_modules-${{ github.ref_name }}-${{ hashFiles('./yarn.lock') }}
+          restore-keys: |
+            node_modules-${{ github.ref_name  }}-
+            node_modules-master-
+            node_modules-main
+            node_modules-
+  
       - name: Install dependencies
+        if: ${{ steps.cache-dependencies.outputs.cache-hit != 'true'  }}
         run: yarn
+      
       - name: Lint
         run: yarn lint
   test:
@@ -25,14 +45,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+      
       - name: Install global deps
-        run: npm i -g yarn  typescript^4.0.0 @nestjs/cli^9.0.0
+        run: npm i -g yarn  typescript@4.9.5 @nestjs/cli@9.4.0
+      
+      - name: cache
+        id: cache-dependencies
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key:  node_modules-${{ github.ref_name }}-${{ hashFiles('./yarn.lock') }}
+          restore-keys: |
+            node_modules-${{ github.ref_name  }}-
+            node_modules-master-
+            node_modules-main
+            node_modules-
+
       - name: Install dependencies
+        if: ${{ steps.cache-dependencies.outputs.cache-hit != 'true'  }}
         run: yarn
+      
       - name: Install Doppler
         run: (curl -Ls --tlsv1.2 --proto "=https" --retry 3 https://cli.doppler.com/install.sh || wget -t 3 -qO- https://cli.doppler.com/install.sh) | sudo sh
       - name: Build
@@ -45,6 +82,6 @@ jobs:
       #   run: yarn env:test:down
 
       - name: Set up  env
-        run: yarn env:test:up
+        run: yarn env:local:up
       - name: Tear down tes env
-        run: yarn env:test:down
+        run: yarn env:local:down
