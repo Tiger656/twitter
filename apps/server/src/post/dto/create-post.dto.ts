@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ObjectId } from 'mongoose';
+import { ObjectId, Types } from 'mongoose';
 import { BaseDto } from 'src/base/base.dto';
 import { z } from 'zod';
 
@@ -12,9 +12,9 @@ export class CreatePostDto extends BaseDto {
 
   @ApiProperty({
     example: 'No example',
-    description: 'Author(user) id',
+    description: 'Author(user) id. This field anyway will be overwritten in system',
   })
-  authorId: ObjectId;
+  author: Types.ObjectId;
 }
 
 export const createPostDtoVaidator = z.object({

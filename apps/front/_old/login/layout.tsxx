@@ -1,0 +1,42 @@
+//   // 'use client'
+//   // import { Inter } from "next/font/google";
+//   // import "primeflex/primeflex.css";
+//   // import 'primereact/resources/themes/lara-light-indigo/theme.css';   // theme
+//   // import 'primereact/resources/primereact.css';                       // core css
+// //import 'primeicons/primeicons.css';                                 // icons
+
+// import { AppProps } from 'next/app'
+// import { SWRConfig } from 'swr'
+// import fetchJson from 'lib/fetchJson'
+
+// export default function MyApp({ Component, pageProps }: AppProps) {
+//   return (
+//     <SWRConfig
+//       value={{
+//         fetcher: fetchJson,
+//         onError: (err) => {
+//           console.error(err)
+//         },
+//       }}
+//     >
+//       <Component {...pageProps} />
+//     </SWRConfig>
+//   )
+// }
+
+
+//   /*
+//   const inter = Inter({ subsets: ['latin'] })
+
+// export default function RootLayout({
+//     children,
+//   }: {
+//     children: React.ReactNode
+//   }) {
+//     return (
+//       <html lang="en">
+//         <body className={inter.className}>{children}</body>
+//       </html>
+//     )
+//   }
+//   */

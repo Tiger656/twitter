@@ -8,7 +8,7 @@ export type UserDocument = HydratedDocument<User>;
 export class User extends BaseModel {
   //@Prop()
   //_id: ObjectId;
-  @Prop()
+  @Prop({unique: true})
   username: string;
   @Prop()
   password: string;

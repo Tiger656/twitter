@@ -10,6 +10,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "APP_ENV=prod yarn doppler nest start",
     "dev": "APP_ENV=local yarn doppler nest start --watch",
+    "dev:prod": "APP_ENV=prod yarn doppler nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",

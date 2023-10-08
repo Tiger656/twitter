@@ -23,11 +23,17 @@ async function bootstrap() {
   mongoose.set('debug', true)
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+ 
   const port = process.env.PORT || 3000;
-  await app.listen(port, '0.0.0.0');
-  Logger.log(
-    `Server running on ${port}`,
-    `Bootstrap`
-  ) 
+  if (process.env.PORT) {
+    await app.listen(port, '0.0.0.0');
+    Logger.log(
+      `Server running on ${port}`,
+      `Bootstrap`
+    )
+  } else { 
+    await app.listen(port);
+  }
+  
 }
 bootstrap();

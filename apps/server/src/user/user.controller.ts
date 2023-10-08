@@ -27,6 +27,7 @@ import { AuthzGuard } from 'src/auth/guards/authz.guard';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  //We can create 
   //@Post()
   //create(@Body() createUserDto: CreateUserDto) {
   //  return this.userService.create(createUserDto);
@@ -47,14 +48,14 @@ export class UserController {
     return this.userService.findOne(id);
   }
 
-  //@Patch(':id')
-  @UseGuards(AuthzGuard)
-  @GuardPermission('update-users')
-  update(@Param('id') id: string, @Body() createUserDto: CreateUserDto) {
-    uuidValidator.parse(id);
-    createUserDtoValidator.parse(createUserDto);
-    return this.userService.update(id, createUserDto);
-  }
+  //@Patch(':id') Disabled because of 
+  // @UseGuards(AuthzGuard)
+  // @GuardPermission('update-users')
+  // update(@Param('id') id: string, @Body() createUserDto: CreateUserDto) {
+  //   uuidValidator.parse(id);
+  //   createUserDtoValidator.parse(createUserDto);
+  //   return this.userService.update(id, createUserDto);
+  // }
 
   @Delete(':id')
   @GuardPermission('delete-users') // add deletion for admin and regular user

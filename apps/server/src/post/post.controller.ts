@@ -38,7 +38,8 @@ export class PostController {
     @JwtPayloadFromRequest() jwt: JwtPayload,
   ) {
     //createPostDtoVaidator.parse(createPostDto);
-    createPostDto.authorId = new mongoose.Schema.Types.ObjectId(jwt._id);
+    const authorId = new mongoose.Types.ObjectId(jwt._id);
+    createPostDto.author = authorId;
     return this.postService.create(createPostDto);
   }
 
@@ -57,6 +58,7 @@ export class PostController {
     return this.postService.findOne(id);
   }
 
+  // No functional for update posts
   // @Patch(':id')
   // @UseGuards(AuthzGuard)
   // @GuardPermission('update-posts') // add condition

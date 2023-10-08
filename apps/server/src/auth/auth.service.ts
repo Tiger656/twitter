@@ -17,9 +17,10 @@ export class AuthService {
   async register(userDto: CreateUserDto) {
     const hashedPassword = await bcrypt.hash(userDto.password, SALT);
     userDto.password = hashedPassword;
-    const user = await this.userService.create(userDto);
-    user.toObject().password = null;
-    return user;
+    const userDocument = await this.userService.create(userDto);
+    const createdUser = userDocument.toObject();
+    createdUser.password = null;
+    return createdUser;
   }
 
   async login(userDto: CreateUserDto) {
@@ -48,8 +49,9 @@ export class AuthService {
   }
 
   async me(jwt: JwtPayload) {
-    const user = await this.userService.findOne(jwt._id); //Can I use decorator to handle result of this function and then set to const
-    delete user.password;
+    const userDocument = await this.userService.findOne(jwt._id); //Can I use decorator to handle result of this function and then set to const
+    const user = userDocument.toObject();
+    user.password = null;
     return user;
     //return { ...user, password: null };
   }

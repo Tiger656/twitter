@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, ObjectId, Types } from 'mongoose';
 import { BaseModel } from 'src/base/base.model';
+import { User } from 'src/user/entities/user.entity';
 
 export type PostDocument = HydratedDocument<Post>;
 
@@ -9,8 +10,12 @@ export class Post extends BaseModel {
   @Prop()
   textContent: string;
 
+
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  authorId: ObjectId;
+  author: User;
+
+  // @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  // authorId: ObjectId;
 
   // @Prop()
   // authorIdLikes: Array<ObjectId>;
