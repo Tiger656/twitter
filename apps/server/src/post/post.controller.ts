@@ -8,69 +8,66 @@ import {
   UseGuards,
   SetMetadata,
   Post,
+  Query,
 } from '@nestjs/common';
 import { PostService } from './post.service';
-import {
-  CreatePostDto,
-  uuidValidator,
-  createPostDtoVaidator,
-} from './dto/create-post.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthnGuard } from 'src/auth/guards/authn.guard';
 import { JwtPayloadFromRequest } from 'src/auth/decorators/jwtpayload-from-request.decorator';
-import { JwtPayload } from 'src/auth/dto/jwt-payload.dto';
 import mongoose, { ObjectId } from 'mongoose';
 import { AuthzGuard } from 'src/auth/guards/authz.guard';
 import { GuardPermission } from 'src/auth/decorators/roles.decorator';
+import { AccessValidator } from './validation/access.validator'; 
+import { CreatePostDto, JwtPayload, UpdatePostDto } from 'types';
 
 @ApiTags('Post Controller')
 @Controller('post')
 @ApiBearerAuth('Token')
 @UseGuards(AuthnGuard)
 export class PostController {
-  constructor(private readonly postService: PostService) {}
+  constructor(private readonly postService: PostService, private readonly accessValidator: AccessValidator) {}
 
   @Post()
   @UseGuards(AuthzGuard)
-  @GuardPermission('create-posts')
+  @GuardPermission(['post-create'])
   create(
     @Body() createPostDto: CreatePostDto,
     @JwtPayloadFromRequest() jwt: JwtPayload,
   ) {
-    //createPostDtoVaidator.parse(createPostDto);
+
     const authorId = new mongoose.Types.ObjectId(jwt._id);
     createPostDto.author = authorId;
     return this.postService.create(createPostDto);
   }
 
   @Get()
-  //@UseGuards(AuthzGuard)
-  //@GuardPermission('read-posts') // info: Just attach metadata to this metod
-  findAll() {
-    return this.postService.findAll();
+  //@UseGuards(AuthzGuard) delete
+  @GuardPermission(['post-read-all'])
+  findAll(@Query("populatedFields") populatedFields: string[]) {
+    return this.postService.findAll(populatedFields);
   }
 
   @Get(':id')
   @UseGuards(AuthzGuard)
-  @GuardPermission('read-posts')
+  @GuardPermission(['post-read-all'])
   findOne(@Param('id') id: string) {
-    uuidValidator.parse(id);
+    //uuidValidator.parse(id);
     return this.postService.findOne(id);
   }
 
-  // No functional for update posts
-  // @Patch(':id')
-  // @UseGuards(AuthzGuard)
-  // @GuardPermission('update-posts') // add condition
-  // update(@Param('id') id: string, @Body() updatePostDto: CreatePostDto) {
-  //   return this.postService.update(id, updatePostDto);
-  // }
+  @Patch(':id')
+  @UseGuards(AuthzGuard)
+  @GuardPermission(['post-update', 'post-update-only-self']) // 'post-update-only-self' doesn't work. Need to replace validatePostCanBeUpdatedByUser for a better solution
+  update(@Param('id') postId: string, @Body() updatePostDto: UpdatePostDto, @JwtPayloadFromRequest() jwt: JwtPayload) { 
+    this.accessValidator.validateUserOwnPost(postId, jwt._id)
+    return this.postService.update(postId, updatePostDto);
+  }
 
   @Delete(':id')
   @UseGuards(AuthzGuard)
-  @GuardPermission('delete-posts')
-  remove(@Param('id') id: string) {
-    uuidValidator.parse(id);
-    return this.postService.remove(id);
+  @GuardPermission(['post-delete', 'post-delete-only-self'])
+  remove(@Param('id') postId: string, @JwtPayloadFromRequest() jwt: JwtPayload) {
+    this.accessValidator.validateUserOwnPost(postId, jwt._id)
+    return this.postService.remove(postId);
   }
 }

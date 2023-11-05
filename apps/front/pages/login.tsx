@@ -3,11 +3,12 @@ import useUser from 'lib/useUser'
 import Layout from 'components/Layout'
 import Form from 'components/Form'
 import fetchJson, { FetchError } from 'lib/fetchJson'
+import { CreateUserDto } from 'types'
 
 export default function Login() {
   // here we just check if user is already logged in and redirect to profile
   const { mutateUser } = useUser({
-    redirectTo: '/profile-sg',
+    redirectTo: '/',
     redirectIfFound: true,
   })
 
@@ -21,8 +22,9 @@ export default function Login() {
           onSubmit={async function handleSubmit(event) {
             event.preventDefault()
 
-            const body = {
+            const createUserDto: CreateUserDto = {
               username: event.currentTarget.username.value,
+              password: event.currentTarget.password.value
             }
 
             try {
@@ -30,7 +32,7 @@ export default function Login() {
                 await fetchJson('/api/login', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(body),
+                  body: JSON.stringify(createUserDto),
                 })
               )
             } catch (error) {

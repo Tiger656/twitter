@@ -1,11 +1,18 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "lib/session";
 import { NextApiRequest, NextApiResponse } from "next";
+import { Role } from "types/dist/src/auth/acl";
 
 export type User = {
     isLoggedIn: boolean;
-    login: string;
-    avatarUrl: string;
+    // login: string;
+    // avatarUrl: string;
+    accessToken: string;
+    _id: string;
+    username: string;
+    roles: Role[];
+    iat: number;
+
   };
   
   export default withIronSessionApiRoute(userRoute, sessionOptions);
@@ -21,8 +28,13 @@ export type User = {
     } else {
       res.json({
         isLoggedIn: false,
-        login: "",
-        avatarUrl: "",
+        accessToken: "",
+        _id: null,
+        username: "",
+        roles: [],
+        iat: null
+        // login: "",
+        // avatarUrl: "",
       });
     }
   }

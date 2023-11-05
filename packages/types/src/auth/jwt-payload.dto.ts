@@ -1,4 +1,4 @@
-import { Role } from '../acl';
+import { Role } from './acl';
 
 export type JwtPayload = {
   _id: string;

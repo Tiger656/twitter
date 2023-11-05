@@ -7,11 +7,13 @@
 export APP=${1}
 export DOCKER_NAME=ghcr.io/tim-shvaiba/liga-twitter-server:0.0.1
 export TAG=latest
-export DOPPLER_TOKEN=
+export DOPPLER_TOKEN=dp.ct.SgeM3lVrx1d202sEiULMGnTdV0jvyIyjk0RPI7JzZG9
 #build
 docker build --platform linux/amd64 -t $DOCKER_NAME -f ./apps/${APP}/Dockerfile .
 
-docker push $DOCKER_NAME:$TAG
+#Run locally docker img: docker run -p 8000:8000 -e DOPPLER_TOKEN=dp.ct.SgeM3lVrx1d202sEiULMGnTdV0jvyIyjk0RPI7JzZG9 696756fa5632
+
+#docker push $DOCKER_NAME:$TAG
 
 #docker images
 # docker push ghcr.io/tiger656/liga-twitter-server:0.0.1

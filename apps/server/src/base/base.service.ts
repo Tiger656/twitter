@@ -1,24 +1,24 @@
 import { BaseRepository } from './base.repository';
 
-export abstract class BaseService<TModel, TCreateDto> {
+export abstract class BaseService<TModel, TCreateDto, TUpdateDto> {
   constructor(
-    private readonly baseRepository: BaseRepository<TModel, TCreateDto>,
+    private readonly baseRepository: BaseRepository<TModel, TCreateDto, TUpdateDto>,
   ) {}
 
   async create(baseDto: TCreateDto) {
     return await this.baseRepository.create(baseDto);
   }
 
-  async findAll() {
-    return await this.baseRepository.findAll();
+  async findAll(populatedField?: string | string[]) {
+    return await this.baseRepository.findAll(populatedField);
   }
 
   async findOne(id: string) {
     return await this.baseRepository.findOne(id);
   }
 
-  async update(id: string, createDto: TCreateDto) {
-    return await this.baseRepository.update(id, createDto);
+  async update(id: string, updateDto: TUpdateDto) {
+    return this.baseRepository.update(id, updateDto);
   }
 
   async remove(id: string) {

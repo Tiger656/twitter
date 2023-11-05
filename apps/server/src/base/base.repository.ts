@@ -4,48 +4,32 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
-export class BaseRepository<TModel, TCreateDto> {
+export class BaseRepository<TModel, TCreateDto, TUpdateDto> {
   constructor(
     @InjectModel(BaseModel.name) private readonly baseModel: Model<TModel>,
   ) {}
 
   async find(filter: any) {
-    return await this.baseModel.find(filter);
+    return (await this.baseModel.find(filter));
   }
-  async create(createDto: TCreateDto) {
+  async create(createDto: TCreateDto): Promise<TModel> {
     const createdModel = new this.baseModel(createDto);
-    return await createdModel.save();
+    return (await createdModel.save()).toObject();
   }
 
-  async findAll() {
-    return await this.baseModel.find();
+  async findAll(populatedField?: string | string[]): Promise<TModel[]> {
+    return (await this.baseModel.find().populate(populatedField!));
   }
 
-  async findOne(id: string) {
-    return await this.baseModel.findById(id);
+  async findOne(id: string): Promise<TModel> {
+    return (await this.baseModel.findById(id))!.toObject();
   }
 
-  async update(id: string, createDto: TCreateDto) {
-    return await this.baseModel.findByIdAndUpdate(id, createDto);
+  async update(id: string, updateDto: TUpdateDto): Promise<TModel> {
+    return (await this.baseModel.findByIdAndUpdate(id, updateDto!))!.toObject();
   }
 
   async remove(id: string) {
     await this.baseModel.findByIdAndRemove(id);
   }
 }
-
-// function Injectable(): (
-//   target: typeof BaseRepository,
-// ) => void | typeof BaseRepository {
-//   throw new Error('Function not implemented.');
-// }
-
-// function InjectModel(
-//   name: any,
-// ): (
-//   target: typeof BaseRepository,
-//   propertyKey: undefined,
-//   parameterIndex: 0,
-// ) => void {
-//   throw new Error('Function not implemented.');
-// }

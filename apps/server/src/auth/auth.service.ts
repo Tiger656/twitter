@@ -2,8 +2,8 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { JwtPayload } from './dto/jwt-payload.dto';
+import { JwtPayload } from '../../../../packages/types/src/auth/jwt-payload.dto';
+import { CreateUserDto } from 'types';
 
 const SALT = 10;
 
@@ -17,9 +17,8 @@ export class AuthService {
   async register(userDto: CreateUserDto) {
     const hashedPassword = await bcrypt.hash(userDto.password, SALT);
     userDto.password = hashedPassword;
-    const userDocument = await this.userService.create(userDto);
-    const createdUser = userDocument.toObject();
-    createdUser.password = null;
+    const createdUser = await this.userService.create(userDto);
+    createdUser.password = '';
     return createdUser;
   }
 
@@ -49,9 +48,8 @@ export class AuthService {
   }
 
   async me(jwt: JwtPayload) {
-    const userDocument = await this.userService.findOne(jwt._id); //Can I use decorator to handle result of this function and then set to const
-    const user = userDocument.toObject();
-    user.password = null;
+    const user = await this.userService.findOne(jwt._id); //Can I use decorator to handle result of this function and then set to const
+    user.password = "";
     return user;
     //return { ...user, password: null };
   }

@@ -7,8 +7,6 @@ import { MulterModule } from '@nestjs/platform-express';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
-import { JWT_CONSTANTS } from './auth/constants';
-import { ValidatorModule } from './validator/validator.module';
 import { conf } from './conf';
 
 @Module({
@@ -22,10 +20,9 @@ import { conf } from './conf';
     UserModule,
     AuthModule,
     JwtModule.register({
-      // secret: JWT_CONSTANTS.secret,
+      //JWTSecret
       secret: conf.auth.secret,
     }),
-    ValidatorModule,
   ],
   controllers: [AppController],
   providers: [AppService],

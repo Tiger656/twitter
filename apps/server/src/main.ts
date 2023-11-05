@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { CreateUserDto } from './user/dto/create-user.dto';
 import mongoose from 'mongoose';
 import { Logger } from '@nestjs/common';
 

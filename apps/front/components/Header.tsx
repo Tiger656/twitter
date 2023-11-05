@@ -12,14 +12,14 @@ export default function Header() {
       <header>
         <nav>
           <ul>
-            <li>
-              <Link href="/">
+            {/* <li>
+              <Link href="/" legacyBehavior>
                 <a>Home</a>
               </Link>
-            </li>
+            </li> */}
             {user?.isLoggedIn === false && (
               <li>
-                <Link href="/login">
+                <Link href="/login" legacyBehavior>
                   <a>Login</a>
                 </Link>
               </li>
@@ -27,30 +27,11 @@ export default function Header() {
             {user?.isLoggedIn === true && (
               <>
                 <li>
-                  <Link href="/profile-sg">
-                    <a>
-                      <span
-                        style={{
-                          marginRight: ".3em",
-                          verticalAlign: "middle",
-                          borderRadius: "100%",
-                          overflow: "hidden",
-                        }}
-                      >
-                        <Image
-                          src={user.avatarUrl}
-                          width={32}
-                          height={32}
-                          alt=""
-                        />
-                      </span>
-                      Profile (Static Generation, recommended)
-                    </a>
-                  </Link>
+                  <p>{user.username} : {user.roles}</p>
                 </li>
                 <li>
-                  <Link href="/profile-ssr">
-                    <a>Profile (Server-side Rendering)</a>
+                  <Link href="/" legacyBehavior>
+                    <a>Main</a>
                   </Link>
                 </li>
                 <li>
@@ -75,7 +56,7 @@ export default function Header() {
             <li>
               <a href="https://github.com/vvo/iron-session">
                 <Image
-                  src="/GitHub-Mark-Light-32px.png"
+                  src="/shitter1.png"
                   width="32"
                   height="32"
                   alt=""

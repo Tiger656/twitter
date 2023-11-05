@@ -15,6 +15,8 @@
     "doppler": "doppler -p app_twitter_monorepo -c ${APP_ENV} run -- ",
     "env:local:up": "APP_ENV=local yarn doppler docker compose up -d",
     "env:local:down": "APP_ENV=local yarn doppler docker compose down ",
+    "env:localprod:up": "APP_ENV=prod yarn doppler docker compose up -d",
+    "env:localprod:down": "APP_ENV=prod yarn doppler docker compose down ",
     "env:test:up": "APP_ENV=test yarn doppler docker compose up -d",
     "env:test:down": "APP_ENV=test yarn doppler docker compose down"
   },
@@ -42,7 +44,7 @@
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "4.2.0",
-    "typescript": "^5.1.6"
+    "typescript": "^4.9.5"
   },
   "name": "my-turborepo",
   "packageManager": "yarn@1.22.19",

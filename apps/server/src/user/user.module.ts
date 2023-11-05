@@ -2,17 +2,17 @@ import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './entities/user.entity';
+import { User, UserSchema } from './user.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { JWT_CONSTANTS } from 'src/auth/constants';
 import { UserRepository } from './user.repository';
+import { conf } from 'src/conf';
 
 @Module({
   imports: [
     Object,
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     JwtModule.register({
-      secret: JWT_CONSTANTS.secret, // why i cannot add this only on app module?
+      secret: conf.auth.secret, // why i cannot add this only on app module?
     }),
   ],
   controllers: [UserController],

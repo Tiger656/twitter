@@ -19,12 +19,12 @@ async function eventsRoute(req: NextApiRequest, res: NextApiResponse<Events>) {
   }
 
   try {
-    const { data: events } =
-      await octokit.rest.activity.listPublicEventsForUser({
-        username: user.login,
-      })
+    // const { data: events } =
+    //   await octokit.rest.activity.listPublicEventsForUser({
+    //     // username: user.login,
+    //   })
 
-    res.json(events)
+    // res.json(events)
   } catch (error) {
     res.status(200).json([])
   }

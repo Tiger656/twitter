@@ -2,11 +2,10 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { RequestWithJwtPayload } from '../request-with-jwtpayload.type';
 import { Reflector } from '@nestjs/core';
-import { Model } from 'mongoose';
-import { JwtPayload } from '../dto/jwt-payload.dto';
-import { Permission, Role, acl } from '../acl';
-import { Post } from 'src/post/entities/post.entity';
+import { JwtPayload } from '../../../../../packages/types/src/auth/jwt-payload.dto';
+import { Permission, Role, acl } from '../../../../../packages/types/src/auth/acl';
 
+//I keep it because it is an interesting idea for authorization, but at this moment I don't see a way it can be developed.
 @Injectable()
 export class AuthzGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
@@ -24,26 +23,19 @@ export class AuthzGuard implements CanActivate {
     const request = context
       .switchToHttp()
       .getRequest() as RequestWithJwtPayload;
-    //const userRoles = request.jwtPayload.roles;
-
-    // for (const userRole of userRoles) {
-    //   if (roles.includes(userRole)) {
-    //     return true;
-    //   }
-    // }
-    //return false
-
-    return this.canI(request.jwtPayload, permission, null);
+    console.log(request.jwtPayload)
+    return this.canI(request.jwtPayload, permission, "null");
   }
 
   canI(requestor: JwtPayload, permission: Permission, entityId: string) {
+    console.log(requestor)
     for (const role of requestor.roles) {
       const permisisonInRole = acl[role].find(
         (el) => el.permission === permission,
       );
       if (!permisisonInRole) continue;
       if (!permisisonInRole.condition) return true;
-      if (permisisonInRole.condition(requestor, entityId)) return true;
+      //if (permisisonInRole.condition(requestor, entityId)) return true;
     }
     return false;
   }
